@@ -35,8 +35,8 @@
         <div class="row">
             <div class="col">
             </div>
-            <div class="col">
-                <input type="text" name="custID" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
+            <div class="col">.0
+                <input type="text" name="searchQuery" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
             </div>
             <div class="col">
             </div>
