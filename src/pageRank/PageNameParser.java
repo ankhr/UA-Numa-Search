@@ -2,16 +2,15 @@ package pageRank;
 
 import com.jcraft.jsch.*;
 import org.apache.commons.lang3.StringUtils;
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.*;
-import java.util.*;
 
-public class Parser {
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.LinkedHashMap;
+
+public class PageNameParser {
     
-    public LinkedHashMap<String,PageNode> pages = new LinkedHashMap<>();
-    
-    public LinkedHashMap<String,PageNode> parse() {
+    public static void main (String[] args) {
         
         try {
             JSch jsch = new JSch();
@@ -33,17 +32,22 @@ public class Parser {
                 
                 String line;
                 int count = 0;
-                while ((line = br.readLine()) != null && count != 1000) {
+                while ((line = br.readLine()) != null && count != 5000) {
                     //bw.write(line+"\n");
-                    String links[] = StringUtils.substringsBetween(line, "<ns>0</ns>\n" +
-                            "    <id>", "</id>");
-                    if (links != null) {
-                        for (int i=0; i<links.length; i++) {
-                            System.out.print(links[i]+",");
+                    String title[] = StringUtils.substringsBetween(line, "<title>", "</title>");
+                    //String id[] = StringUtils.substringsBetween(line, "<id>", "</id>");
+                    if (title != null) {
+                        for (int i=0; i<title.length; i++) {
+                            System.out.print(title[i]+","+"\n");
                             //pages.put(links[i], new PageNode(links[i]));
                         }
-                        System.out.println();
                     }
+//                    if (id != null) {
+//                        for (int i=0; i<id.length; i++) {
+//                            System.out.print(id[i]+","+"\n");
+//                            //pages.put(links[i], new PageNode(links[i]));
+//                        }
+//                    }
                     count++;
                 }
     
@@ -60,9 +64,5 @@ public class Parser {
         } catch (SftpException e) {
             e.printStackTrace();
         }
-        
-        return pages;
     }
-    
-    
 }
