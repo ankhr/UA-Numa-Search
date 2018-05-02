@@ -4,8 +4,13 @@ import com.jcraft.jsch.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 
 public class PageNameParser {
@@ -26,28 +31,31 @@ public class PageNameParser {
             
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                //Charset charset = Charset.forName("UTF-8");
-                //Path output = FileSystems.getDefault().getPath("dump.txt");
-                //BufferedWriter bw = Files.newBufferedWriter(output, charset);
+//                Charset charset = Charset.forName("UTF-8");
+//                Path output = FileSystems.getDefault().getPath("dump.txt");
+//                BufferedWriter bw = Files.newBufferedWriter(output, charset);
                 
                 String line;
                 int count = 0;
-                while ((line = br.readLine()) != null && count != 5000) {
-                    //bw.write(line+"\n");
+                while ((line = br.readLine()) != null) {
+//                    bw.write(line+"\n");
                     String title[] = StringUtils.substringsBetween(line, "<title>", "</title>");
-                    //String id[] = StringUtils.substringsBetween(line, "<id>", "</id>");
+                    String id[] = StringUtils.substringsBetween(line, "<id>", "</id>");
                     if (title != null) {
                         for (int i=0; i<title.length; i++) {
                             System.out.print(title[i]+","+"\n");
-                            //pages.put(links[i], new PageNode(links[i]));
+//                            pages.put(links[i], new PageNode(links[i]));
                         }
                     }
-//                    if (id != null) {
-//                        for (int i=0; i<id.length; i++) {
-//                            System.out.print(id[i]+","+"\n");
-//                            //pages.put(links[i], new PageNode(links[i]));
-//                        }
-//                    }
+                    if (id != null) {
+                        for (int i=0; i<id.length; i++) {
+                            System.out.print(id[i]+","+"\n");
+                            //pages.put(links[i], new PageNode(links[i]));
+                            for (int j=0; j<8; j++) {
+                                line = br.readLine();
+                            }
+                        }
+                    }
                     count++;
                 }
     
