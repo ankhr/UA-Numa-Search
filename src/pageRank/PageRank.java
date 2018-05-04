@@ -7,50 +7,67 @@ public class PageRank {
 
 	public static void main(String[] args) {
 		
-		//create map
-		//TestingData sample = new TestingData();
-		pageRank.Parser sample = new pageRank.Parser();
-		LinkedHashMap<String,PageNode> pages = sample.parse();
+		int counter = 0;
+		Boolean changes;
+		Double newWeight;
+		Double[] deadWeight = {0.0, 0.0};
+		PageNode page;
 		
-		//calculate initial weight
-		Double initialWeight = 1.0/pages.size();
+		//create map
+		TestingData sample = new TestingData();
+		LinkedHashMap<String,PageNode> pages = sample.pages;
 		
 		//initialize weights
-		for(Map.Entry<String,PageNode> page : pages.entrySet()) {
-			page.getValue().weight = initialWeight;
-		}
+		Double initialWeight = 1.0/pages.size();
+		for(Map.Entry<String,PageNode> entry : pages.entrySet())
+			entry.getValue().weight = initialWeight;
 		
-		int counter = 0;
-		int changes = 0;
-		Double newWeight;
+		//initialize edge weights
+		for(Map.Entry<String,PageNode> entry : pages.entrySet()) {
+			for(Map.Entry<PageNode,Double> link : entry.getValue().out.entrySet())
+				link.setValue(entry.getValue().weight/entry.getValue().out.size());
+			if(entry.getValue().out.size() == 0)
+				deadWeight[0] += entry.getValue().weight;
+		}
 		
 		//page rank
 		do {
 			counter++;
-			changes = 0;
-			for(Map.Entry<String,PageNode> page : pages.entrySet()) {
-				for(Map.Entry<PageNode,Double> link : page.getValue().out.entrySet()) {
-					link.setValue(page.getValue().weight/page.getValue().out.size());
-				}
-			}
-			for(Map.Entry<String,PageNode> page : pages.entrySet()) {
+			changes = false;
+			deadWeight[1] = deadWeight[0] / pages.size();
+			deadWeight[0] = 0.0;
+			//calculate new node weights
+			for(Map.Entry<String,PageNode> entry : pages.entrySet()) {
 				newWeight = 0.0;
-				for(PageNode link : page.getValue().in) {
-					newWeight = newWeight + pages.get(link.name).out.get(page.getValue());
-				}
-				if(Double.compare(newWeight, page.getValue().weight) != 0) {
-					changes++;
-				}
-				page.getValue().weight = newWeight;
+				page = entry.getValue();
+				for(PageNode link : page.in)
+					newWeight += pages.get(link.name).out.get(page);
+				newWeight += deadWeight[1];
+				if(page.out.size() == 0)
+					deadWeight[0] += newWeight;
+				if(Double.compare(newWeight, page.weight) != 0)
+					changes = true;
+				page.weight = newWeight;
 			}
-		} while(changes != 0 && counter < 50000);
+			//calculate new edge weights
+			for(Map.Entry<String,PageNode> entry : pages.entrySet()) {
+				page = entry.getValue();
+				for(Map.Entry<PageNode,Double> link : page.out.entrySet())
+					link.setValue(page.weight/page.out.size());
+			}
+		} while(changes && counter < 50000);
 		
-		// Display elements
-//		for(Map.Entry<String,PageNode> page : pages.entrySet()) {
-//			System.out.println(page.getKey()+": "+page.getValue().weight);
-//		}
-	
-	
+		//testing
+		Double total = 0.0;
+		Double value;
+		for(Map.Entry<String,PageNode> entry : pages.entrySet()) {
+			value = entry.getValue().weight;
+			System.out.println(entry.getKey() + ": " + value);
+			total += value;
+		}
+		System.out.println();
+		System.out.println("Total: " + total);
+		System.out.println("Counter: " + counter);
 		
 	}
 

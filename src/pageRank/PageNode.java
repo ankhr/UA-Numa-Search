@@ -8,7 +8,7 @@ public class PageNode {
 	String name;
 	Double weight;
 	ArrayList<PageNode> in = new ArrayList<>();
-	LinkedHashMap<PageNode,Double> out = new LinkedHashMap<>();
+	LinkedHashMap<PageNode,Double> out = new LinkedHashMap<PageNode,Double>();	
 	
 	public PageNode(String name) {
 		this.name = name;
