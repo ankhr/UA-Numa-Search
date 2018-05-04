@@ -28,4 +28,3 @@ hs_err_pid*
 *.iml
 web/bootstrap
 src/Shell.java
-dump.txt

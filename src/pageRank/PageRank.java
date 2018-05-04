@@ -8,8 +8,9 @@ public class PageRank {
 	public static void main(String[] args) {
 		
 		//create map
-		TestingData sample = new TestingData();
-		LinkedHashMap<String,PageNode> pages = sample.pages;
+		//TestingData sample = new TestingData();
+		pageRank.Parser sample = new pageRank.Parser();
+		LinkedHashMap<String,PageNode> pages = sample.parse();
 		
 		//calculate initial weight
 		Double initialWeight = 1.0/pages.size();
@@ -45,9 +46,11 @@ public class PageRank {
 		} while(changes != 0 && counter < 50000);
 		
 		// Display elements
-		for(Map.Entry<String,PageNode> page : pages.entrySet()) {
-			System.out.println(page.getKey()+": "+page.getValue().weight);
-		}
+//		for(Map.Entry<String,PageNode> page : pages.entrySet()) {
+//			System.out.println(page.getKey()+": "+page.getValue().weight);
+//		}
+	
+	
 		
 	}
 

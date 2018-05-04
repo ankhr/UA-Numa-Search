@@ -31,7 +31,32 @@
 
 <br>
 
-// TODO
+<form class="form-signin" action="index.jsp" method="post">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+            <input type="text" name="custID" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+            <br>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Search</button>
+            <br>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</form>
 
 </body>
 </html>
