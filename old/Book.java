@@ -77,7 +77,7 @@ public class Book {
     public static String removeEhWords(String line) throws IOException {
         
         Set<String> stopWords = new HashSet<>();
-        InputStream in = Files.newInputStream(Paths.get("H:\\Coursework\\Advanced Algorithms\\UA Numa Search\\src\\wordFilter.txt"));
+        InputStream in = Files.newInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         String input;
         while ((input = br.readLine()) != null) {

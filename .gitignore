@@ -26,4 +26,3 @@ hs_err_pid*
 .idea
 *.iml
 web/bootstrap
-src/Shell.java

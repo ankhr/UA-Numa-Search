@@ -1,3 +1,5 @@
+<%@ page import="pageRank.Book" %>
+<%@ page import="pageRank.PageNode" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 
@@ -29,14 +31,19 @@
     </div>
 </section>
 
+    <%
+        Book book = new Book();
+        session.setAttribute("book", book);
+    %>
+
     <br>
 
-    <form class="form-signin" action="index.jsp" method="post">
+    <form class="form-signin" action="results.jsp" method="post">
         <div class="row">
             <div class="col">
             </div>
             <div class="col">
-                <input type="text" name="custID" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
+                <input type="text" name="searchQuery" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
             </div>
             <div class="col">
             </div>

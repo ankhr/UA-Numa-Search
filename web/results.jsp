@@ -1,3 +1,6 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="pageRank.Book" %>
+<%@ page import="pageRank.PageNode" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 
@@ -36,7 +39,11 @@
         <div class="col">
         </div>
         <div class="col">
-            <input type="text" name="custID" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
+            <%
+                Book book = (Book) session.getAttribute("book");
+                Map<String, Integer> a = book.book.get(request.getParameter("searchQuery"));
+            %>
+            <input type="text" name="searchQuery" style="text-align:center" class="form-control" value="<%= a%>" required autofocus>
         </div>
         <div class="col">
         </div>
