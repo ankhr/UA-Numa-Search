@@ -36,7 +36,7 @@
             <div class="col">
             </div>
             <div class="col">
-                <input type="text" name="custID" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
+                <input type="text" name="custID" style="text-align:center" class="form-control" placeholder="TESTING" required autofocus>
             </div>
             <div class="col">
             </div>
