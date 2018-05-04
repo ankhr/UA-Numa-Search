@@ -26,19 +26,18 @@ public class Book {
                 while ((line = br.readLine()) != null) {
                     line = Jsoup.clean(line, Whitelist.simpleText());
                     if (!line.equalsIgnoreCase("")) {
-                        line = clean(line);
-                        String[] wordLine = line.split("[ ,!?.—():;0123456789/\"]+");
+//                        if (line.contains("Some of these are of women held in servitude")) {
+                            
+//                            line = removeEhWords(line);
+                            String[] wordLine = line.split("[ 0123456789.,:;!?—()/\"]+");
     
-                        for (int i=0; i<wordLine.length; i++) {
-                            if (wordLine[i].equalsIgnoreCase("the")) {
-//                                System.out.println("the");
-                            }
-                        }
-                        words.add(wordLine);
-//                    for (int i=0; i<words.length; i++) {
-//                        System.out.println(words[i]);
-//                    }
+//                            cleanCheck(wordLine);
+    
+                            words.add(wordLine);
+//                        }
+                        
                     }
+                    
                 }
                 Map<String, Integer> frequencies = new LinkedHashMap<>();
                 for (String[] wordArray : words) {
@@ -55,7 +54,8 @@ public class Book {
                         }
                     }
                 }
-                System.out.println(frequencies.containsKey("the"));
+//                System.out.println("test");
+                br.close();
             }
             
         }catch (IOException e) {
@@ -63,38 +63,62 @@ public class Book {
         }
     }
     
-    public static String clean(String line) {
+    public static String removeEhWords(String line) throws IOException {
         
-        Set<String> stopWords = new HashSet<String>();
-        stopWords.add("a");
-        stopWords.add("and");
-        stopWords.add("is");
-        stopWords.add("of");
-        stopWords.add("the");
-        stopWords.add("in");
+        Set<String> stopWords = new HashSet<>();
+        InputStream in = Files.newInputStream(Paths.get("H:\\Coursework\\Advanced Algorithms\\UA Numa Search\\src\\wordFilter.txt"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String input;
+        while ((input = br.readLine()) != null) {
+            stopWords.add(input);
+        }
     
         StringBuffer clean = new StringBuffer();
         int index = 0;
     
         while (index < line.length()) {
-            // the only word delimiter supported is space, if you want other
-            // delimiters you have to do a series of indexOf calls and see which
-            // one gives the smallest index, or use regex
+
             int nextIndex = line.indexOf(" ", index);
             if (nextIndex == -1) {
                 nextIndex = line.length() - 1;
             }
+            
             String word = line.substring(index, nextIndex);
-            if (!stopWords.contains(word.toLowerCase())) {
-                clean.append(word);
-                if (nextIndex < line.length()) {
-                    // this adds the word delimiter, e.g. the following space
-                    clean.append(line.substring(nextIndex, nextIndex + 1));
+            if (word.equalsIgnoreCase("since")) {
+                System.out.println("test");
+                word = word.replaceAll("[.,:;!?—()/\"']+", "");
+                if (!stopWords.contains(word.toLowerCase())) {
+                    clean.append(word);
+                    if (nextIndex < line.length()) {
+                        clean.append(line.substring(nextIndex, nextIndex + 1));
+                    }
+                }
+                index = nextIndex + 1;
+            }
+            
+        }
+        br.close();
+        return clean.toString();
+    }
+    
+    public static void cleanCheck(String[] wordLine) throws IOException{
+    
+        InputStream in = Files.newInputStream(Paths.get("H:\\Coursework\\Advanced Algorithms\\UA Numa Search\\src\\wordFilter.txt"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String input;
+        List<String> list = new ArrayList<>();
+        while ((input = br.readLine()) != null) {
+            list.add(input);
+        }
+        
+        for (int i=0; i<wordLine.length; i++) {
+            for (int j=0; j<list.size(); j++) {
+                if (wordLine[i].equalsIgnoreCase(list.get(j))) {
+                    System.out.println(wordLine[i]+":"+Arrays.toString(wordLine));
                 }
             }
-            index = nextIndex + 1;
         }
-    
-        return clean.toString();
+        br.close();
+        
     }
 }
