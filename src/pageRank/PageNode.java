@@ -8,10 +8,14 @@ public class PageNode {
 	String name;
 	Double weight;
 	ArrayList<PageNode> in = new ArrayList<>();
-	LinkedHashMap<PageNode,Double> out = new LinkedHashMap<PageNode,Double>();	
+	LinkedHashMap<PageNode,Double> out = new LinkedHashMap<PageNode,Double>();
+	double[] vector;
 	
 	public PageNode(String name) {
 		this.name = name;
+	}
+	public double[] getVecLoc(){
+		return this.vector;
 	}
 	
 }
