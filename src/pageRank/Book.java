@@ -23,7 +23,8 @@ public class Book {
     public void initStopWords() {
     
         try {
-            InputStream in = Files.newInputStream(Paths.get("E:/Coursework/Advanced Algorithms/UA Numa Search/src/wordFilter.txt"));
+//            InputStream in = Files.newInputStream(Paths.get(System.getProperty("user.dir") + "/src/stopwords.txt"));
+            InputStream in = Files.newInputStream(Paths.get("H:/Coursework/Advanced Algorithms/UA Numa Search/src/stopwords.txt"));
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             
             String line;
@@ -40,7 +41,8 @@ public class Book {
         
         try {
             // Path to parsed page files
-            Path inDir = FileSystems.getDefault().getPath("E:/Coursework/Advanced Algorithms/UA Numa Search/src/parse/output/AA/");
+//            Path inDir = FileSystems.getDefault().getPath(System.getProperty("user.dir") + "/src/parse/output/AA/");
+            Path inDir = FileSystems.getDefault().getPath("H:/Coursework/Advanced Algorithms/UA Numa Search/src/parse/output/AA/");
             DirectoryStream<Path> stream = Files.newDirectoryStream(inDir);
     
             boolean pageNameTracker = false;
@@ -62,7 +64,7 @@ public class Book {
                     // Strip everything but words
                     line = Jsoup.clean(line, Whitelist.simpleText());
                     if (!line.equalsIgnoreCase("")) {
-                        String[] wordLine = line.split("[ =+!@#$%^&*()~`0123456789.,:;!?—()/\"]+");
+                        String[] wordLine = line.split("[ =+!@#$%^&*()~`0123456789.,:;?—/\"]+");
                         words.add(wordLine);
                     }
                 }
@@ -84,7 +86,7 @@ public class Book {
                         }
                     }
                 }
-                book.put(pageName, frequencies);
+                book.put(pageName.toLowerCase(), frequencies);
                 pageNameTracker = false;
                 br.close();
             }
@@ -92,7 +94,7 @@ public class Book {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("");
+        //System.out.println("");
     }
     
     public double euclideanDistance(PageNode page1, PageNode page2) {

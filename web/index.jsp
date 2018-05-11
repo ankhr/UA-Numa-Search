@@ -1,3 +1,5 @@
+<%@ page import="pageRank.Book" %>
+<%@ page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 
@@ -13,25 +15,46 @@
 <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="index.jsp" >UAFS</a>
-        <div class="collapse navbar-collapse justify-content-end">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="index.jsp"><span class="sr-only">(current)</span></a>
+        <div class="container">
+            <a class="navbar-brand" href="index.jsp" >UAFS</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="index.jsp"><span class="sr-only">(current)</span></a>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">UA Numa Search</h1>
-    </div>
-</section>
+        <div class="container">
+            <h1 class="jumbotron-heading">UA Numa Search</h1>
+        </div>
+    </section>
 
     <%
-        Book book = new Book();
-        session.setAttribute("book", book);
+        /*
+         * TEST: Data initialization.
+         * The first time that we arrive on the search page,
+         * the data structures will be null. On page load, this is
+         * where they are initialized.
+         *
+         * Afterwards, they'll contain data persistent across
+         * all pages and clients. They won't be initialized again
+         * until tomcat server restarts.
+         */
+        if (application.getAttribute("link") == null) {
+
+            // init 1, page name and word frequency
+            Book book = new Book();
+            application.setAttribute("book", book);
+
+            // init 2, page name and links links
+            Map<String, String> link = new HashMap<>();
+            link.put("anarchism", "https://en.wikipedia.org/wiki/Anarchism");
+            link.put("aardvark", "https://en.wikipedia.org/wiki/Aardvark");
+            link.put("audi", "https://en.wikipedia.org/wiki/Audi");
+            application.setAttribute("link", link);
+        }
     %>
 
     <br>
