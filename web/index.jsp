@@ -61,28 +61,13 @@
 
     <form class="form-signin" action="results.jsp" method="post">
         <div class="row">
-            <div class="col">
-            </div>
-            <div class="col">
+            <div class="col"></div>
+            <div class="col-6 align-self-center">
                 <input type="text" name="searchQuery" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
-            </div>
-            <div class="col">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-            </div>
-            <div class="col">
-            </div>
-            <div class="col">
                 <br>
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Search</button>
-                <br>
+                <button type="submit" class="btn btn btn-primary btn-block">Search</button>
             </div>
-            <div class="col">
-            </div>
-            <div class="col">
-            </div>
+            <div class="col"></div>
         </div>
     </form>
 

@@ -12,7 +12,6 @@ public class Book {
     public Map<String, Map<String, Integer>> book = new LinkedHashMap<>();
     
     Set<String> wordList = new HashSet<>();
-    
     Set<String> stopWords = new HashSet<>();
     
     public Book() {

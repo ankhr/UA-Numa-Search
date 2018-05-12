@@ -51,58 +51,41 @@
 
     <form class="form-signin" action="results.jsp" method="post">
         <div class="row">
-            <div class="col">
-            </div>
-            <div class="col">
-                <input type="text" name="searchQuery" style="text-align:center" class="form-control" value="" required autofocus>
-            </div>
-            <div class="col">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-            </div>
-            <div class="col">
-            </div>
-            <div class="col">
+            <div class="col"></div>
+            <div class="col-6 align-self-center">
+                <input type="text" name="searchQuery" style="text-align:center" class="form-control" placeholder="Enter search" required autofocus>
                 <br>
-                <%--<button type="submit" class="btn btn-lg btn-primary btn-block">Search</button>--%>
-                <%--<br>--%>
+                <br>
             </div>
-            <div class="col">
-            </div>
-            <div class="col">
-            </div>
+            <div class="col"></div>
         </div>
     </form>
 
     <div class="container">
         <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col" style="text-align:right">#</th>
-                <th scope="col" style="text-align:center">Page</th>
-            </tr>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="text-align:right">#</th>
+                    <th scope="col" style="text-align:center">Page</th>
+                </tr>
             </thead>
             <tbody>
-            <%
-                if (link.containsKey(searchQuery.toLowerCase())) {
-            %>
-            <tr>
-                <td style="text-align: right; width: 30%">Link</td>
-                                                                         <%//opens link in newtab%>
-                <td style="text-align: center"><a target="_blank" href="<%=link.get(searchQuery)%>"><%=link.get(searchQuery)%></a></td>
-            </tr>
-            <%
-                }
-            %>
-
-            <tr>
-                <td style="text-align: right; width: 30%">Word Frequency</td>
-                                                                                <%//shows word frequency%>
-                <td style="text-align: center"><a target="_blank" href="<%=searchQuery%>"><%=wordFrequency%></a></td>
-            </tr>
-
+                <%
+                    if (link.containsKey(searchQuery.toLowerCase())) {
+                %>
+                <tr>
+                    <td style="text-align: right; width: 30%">Link</td>
+                                                                             <%//opens link in newtab%>
+                    <td style="text-align: center"><a target="_blank" href="<%=link.get(searchQuery)%>"><%=link.get(searchQuery)%></a></td>
+                </tr>
+                <%
+                    }
+                %>
+                <tr>
+                    <td style="text-align: right; width: 30%">Word Frequency</td>
+                                                                <%//shows word frequency%>
+                    <td style="text-align: center" target="_blank"><%=wordFrequency%></td>
+                </tr>
             </tbody>
         </table>
     </div>
