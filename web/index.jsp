@@ -1,5 +1,7 @@
 <%@ page import="pageRank.Book" %>
 <%@ page import="java.util.*" %>
+<%@ page import="pageRank.PageNode" %>
+<%@ page import="pageRank.UANuma" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 
@@ -32,28 +34,15 @@
     </section>
 
     <%
-        /*
-         * TEST: Data initialization.
-         * The first time that we arrive on the search page,
-         * the data structures will be null. On page load, this is
-         * where they are initialized.
-         *
-         * Afterwards, they'll contain data persistent across
-         * all pages and clients. They won't be initialized again
-         * until tomcat server restarts.
-         */
-        if (application.getAttribute("link") == null) {
+        if (application.getAttribute("uaNuma") == null) {
 
-            // init 1, page name and word frequency
-            Book book = new Book();
-            application.setAttribute("book", book);
+            String d2vFile = "C:\\Users\\alton\\Desktop\\Test1\\web\\tinyd2v.dat";
+            String docFilename = "C:\\Users\\alton\\Desktop\\Test1\\web\\tinywikivocab.txt";
+            String vectorFilename = "C:\\Users\\alton\\Desktop\\Test1\\web\\tinywikivectors.txt";
 
-            // init 2, page name and links links
-            Map<String, String> link = new HashMap<>();
-            link.put("anarchism", "https://en.wikipedia.org/wiki/Anarchism");
-            link.put("aardvark", "https://en.wikipedia.org/wiki/Aardvark");
-            link.put("audi", "https://en.wikipedia.org/wiki/Audi");
-            application.setAttribute("link", link);
+            UANuma uaNuma = new UANuma(d2vFile, docFilename, vectorFilename);
+
+            application.setAttribute("uaNuma", uaNuma);
         }
     %>
 

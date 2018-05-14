@@ -1,6 +1,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="pageRank.Book" %>
 <%@ page import="pageRank.PageNode" %>
+<%@ page import="pageRank.UANuma" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 
@@ -33,20 +34,11 @@
     </section>
 
     <%
-        /*
-         * After a search query is submitted, the page redirects here,
-         * and stays here for subsequent searches
-         * til user explicitly goes back to index.jsp
-         */
         String searchQuery = request.getParameter("searchQuery");
 
-        // reference stored data structures
-        Book book = (Book) application.getAttribute("book");
-        Map<String, String> link = (Map<String, String>) application.getAttribute("link");
+        UANuma uaNuma = (UANuma) application.getAttribute("uaNuma");
 
-        // get word frequency from book
-        Map<String, Integer> wordFrequency = book.book.get(searchQuery);
-
+        List<PageNode> results = uaNuma.getSearchResults(searchQuery);
     %>
 
     <form class="form-signin" action="results.jsp" method="post">
@@ -71,21 +63,18 @@
             </thead>
             <tbody>
                 <%
-                    if (link.containsKey(searchQuery.toLowerCase())) {
+                    for (int i=0; i<results.size(); i++) {
                 %>
                 <tr>
-                    <td style="text-align: right; width: 30%">Link</td>
-                                                                             <%//opens link in newtab%>
-                    <td style="text-align: center"><a target="_blank" href="<%=link.get(searchQuery)%>"><%=link.get(searchQuery)%></a></td>
+                    <td style="text-align: right; width: 30%"><%=i+1%></td>
+                    <%
+                        String pageName = results.get(i).toString();
+                    %>
+                    <td style="text-align: center"><a target="_blank" href="suggestions.jsp?value=<%=pageName%>"><%=pageName%></a></td>
                 </tr>
                 <%
                     }
                 %>
-                <tr>
-                    <td style="text-align: right; width: 30%">Word Frequency</td>
-                                                                <%//shows word frequency%>
-                    <td style="text-align: center" target="_blank"><%=wordFrequency%></td>
-                </tr>
             </tbody>
         </table>
     </div>
