@@ -3,20 +3,26 @@ package pageRank;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class UANuma {
+    public Annoy annoy;
+    public ArrayList<PageNode> data;
+    private int NUM_TREES = 15;
+    private int DEFAULT_K = 300;
+    private int DEFAULT_N = 20;
+    String d2vFilename;
 
-    public static void main(String[] args) throws Exception {
-        ArrayList<PageNode> data = readData(".\\src\\parse\\tinywikivocab.txt", "./src/parse/tinywikivectors.txt");
-        Annoy annoy = new Annoy(data, 15);
-        PageNode searchPoint = new PageNode("searchpoint");
-        searchPoint.vector = inferVector("anti-authoritarian", "./src/parse/tinyd2v.dat");
-        List<PageNode> results = annoy.closestN(searchPoint, 20, 300);
-        System.out.println(Arrays.toString(results.toArray()));
+    public UANuma(String d2vFile, String docFilename, String vectorFilename) throws IOException {
+
+        this.data = readData(docFilename, vectorFilename);
+        this.annoy = new Annoy(data, NUM_TREES);
+        this.d2vFilename = d2vFile;
     }
 
-    public static ArrayList<PageNode> readData(String articlesFileName,String vectorFileName) throws IOException {
+
+    public static ArrayList<PageNode> readData(String articlesFileName, String vectorFileName) throws IOException {
         ArrayList<PageNode> data = new ArrayList<>(3000);
         BufferedReader brArticles = new BufferedReader(new FileReader(articlesFileName));
         BufferedReader brVector = new BufferedReader(new FileReader(vectorFileName));
@@ -49,5 +55,15 @@ public class UANuma {
         String output = stdInp.readLine();
         System.out.println(output);
         return parseVector(output);
+    }
+
+    public List<PageNode> getSearchResults(String search) throws Exception {
+        PageNode searchPoint = new PageNode("searchPoint");
+        searchPoint.vector = inferVector(search, this.d2vFilename);
+        return annoy.closestN(searchPoint, DEFAULT_N, DEFAULT_K);
+    }
+
+    public List<PageNode> getSimilarPages(PageNode pageNode) throws Exception {
+        return annoy.closestN(pageNode, DEFAULT_N, DEFAULT_K);
     }
 }
