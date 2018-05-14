@@ -1,8 +1,9 @@
 package pageRank;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Annoy {
+public class Annoy implements Serializable {
 
     private ArrayList<AnnoyNode> trees;
 
@@ -72,7 +73,7 @@ public class Annoy {
         return sum;
     }
 
-    private static class AnnoyNode {
+    private static class AnnoyNode implements Serializable{
 
         static Random random = new Random();
         // consider refactoring to linked list. Would be much
