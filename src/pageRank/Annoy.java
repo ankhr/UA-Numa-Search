@@ -1,7 +1,6 @@
 package pageRank;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class Annoy {
 
@@ -11,6 +10,32 @@ public class Annoy {
         for (int i = 0; i < numTrees; i++) {
             trees.add(new AnnoyNode(content, null));
         }
+    }
+
+    public ArrayList<PageNode> closestN(PageNode searchPoint,int n, int k) {
+        HashSet<PageNode> distinctNeighbors = new HashSet<>();
+        for (AnnoyNode tree: trees) {
+            AnnoyNode current = tree;
+            while(current.content.size()>k){
+                if (current.l == null && current.r == null) {
+                    break;
+                } else if (searchPoint.vector[current.dimension] > current.splitValue) {
+                    if (current.r != null) {
+                        current = current.r;
+                    } else {
+                        current = current.l;
+                    }
+                } else {
+                    if (current.l != null) {
+                        current = current.l;
+                    } else {
+                        current = current.r;
+                    }
+                }
+            }
+            distinctNeighbors.addAll(current.content);
+        }
+        PriorityQueue()
     }
 
     private static class AnnoyNode {
@@ -35,7 +60,7 @@ public class Annoy {
             }
 
             int id1 = random.nextInt(content.size());
-            int id2  = random.nextInt(content.size());
+            int id2 = random.nextInt(content.size());
             while (id1 == id2) {
                 id2 = random.nextInt(content.size());
             }
@@ -43,12 +68,15 @@ public class Annoy {
             PageNode point2 = content.get(id2);
 
             double maxGapSize = -1;
-            for ( int i = 0; i<point1.vector.length;i++) {
+            for (int i = 0; i < point1.vector.length; i++) {
                 double gapSize = Math.abs(point1.vector[i] - point2.vector[i]);
                 if (gapSize > maxGapSize) {
                     this.dimension = i;
                     maxGapSize = gapSize;
                 }
+            }
+            if (maxGapSize < 0) {
+                return;
             }
 
             splitValue = (point1.vector[this.dimension] + point2.vector[this.dimension]) / 2;
