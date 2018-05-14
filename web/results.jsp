@@ -39,6 +39,7 @@
         UANuma uaNuma = (UANuma) application.getAttribute("uaNuma");
 
         List<PageNode> results = uaNuma.getSearchResults(searchQuery);
+        //List<PageNode> results = uaNuma.getSimilarPages(uaNuma.hashMap.get(request.getParameter(searchQuery)));
     %>
 
     <form class="form-signin" action="results.jsp" method="post">

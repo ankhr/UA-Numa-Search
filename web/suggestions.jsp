@@ -53,7 +53,7 @@
         %>
         <tr>
             <td style="text-align: right; width: 30%"><%=i%></td>
-            <td style="text-align: center"><a target="_blank" href="suggestions.jsp"><%=suggestions.get(i).toString()%></a></td>
+            <td style="text-align: center"><a target="_blank" href="suggestions.jsp?value=<%=suggestions.get(i)%>"><%=suggestions.get(i).toString()%></a></td>
         </tr>
         <%
             }
