@@ -12,8 +12,8 @@ public class Annoy {
         }
     }
 
-    public ArrayList<PageNode> closestN(PageNode searchPoint,int n, int k) {
-        HashSet<PageNode> distinctNeighbors = new HashSet<>();
+    public ArrayList<PageNode> closestN(PageNode searchPoint,int n, int k) throws Exception {
+        HashMap<PageNode,Double> distinctNeighbors = new HashMap<>();
         for (AnnoyNode tree: trees) {
             AnnoyNode current = tree;
             while(current.content.size()>k){
@@ -33,9 +33,25 @@ public class Annoy {
                     }
                 }
             }
-            distinctNeighbors.addAll(current.content);
+            for (PageNode p :
+                    current.content) {
+                if (!distinctNeighbors.containsKey(p)) {
+                    distinctNeighbors.put(p, sumOfSquaresDistance(p.vector, searchPoint.vector));
+                }
+            }
         }
-        PriorityQueue()
+        ArrayList<PageNode>
+    }
+
+    private Double sumOfSquaresDistance(double[] vector, double[] vector1) throws Exception {
+        if (vector.length != vector1.length) {
+            throw new Exception();
+        }
+        double sum = 0;
+        for (int i = 0; i < vector.length; i++) {
+            sum += Math.pow((vector[i] - vector1[i]), 2);
+        }
+        return sum;
     }
 
     private static class AnnoyNode {
