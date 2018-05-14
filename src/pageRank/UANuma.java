@@ -1,14 +1,12 @@
 package pageRank;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class UANuma {
+public class UANuma implements Serializable {
     public Annoy annoy;
     public ArrayList<PageNode> data;
+    public HashMap<String, PageNode> hashMap;
     private int NUM_TREES = 15;
     private int DEFAULT_K = 300;
     private int DEFAULT_N = 20;
@@ -17,6 +15,10 @@ public class UANuma {
     public UANuma(String d2vFile, String docFilename, String vectorFilename) throws IOException {
 
         this.data = readData(docFilename, vectorFilename);
+        this.hashMap = new HashMap<>(data.size());
+        for (PageNode datum:data) {
+            hashMap.put(datum.name, datum);
+        }
         this.annoy = new Annoy(data, NUM_TREES);
         this.d2vFilename = d2vFile;
     }
