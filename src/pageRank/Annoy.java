@@ -7,12 +7,13 @@ public class Annoy {
     private ArrayList<AnnoyNode> trees;
 
     public Annoy(ArrayList<PageNode> content, int numTrees) {
+        trees = new ArrayList<>();
         for (int i = 0; i < numTrees; i++) {
             trees.add(new AnnoyNode(content, null));
         }
     }
 
-    public ArrayList<PageNode> closestN(PageNode searchPoint,int n, int k) throws Exception {
+    public List<PageNode> closestN(PageNode searchPoint,int n, int k) throws Exception {
         HashMap<PageNode,Double> distinctNeighbors = new HashMap<>();
         for (AnnoyNode tree: trees) {
             AnnoyNode current = tree;
@@ -40,12 +41,29 @@ public class Annoy {
                 }
             }
         }
-        ArrayList<PageNode>
+//            algorithmically, a heap would be better here, but n will be small enough to not matter
+        ArrayList<PageNode> closest = new ArrayList<>(distinctNeighbors.keySet());
+        closest.sort(new Comparator<PageNode>() {
+            @Override
+            public int compare(PageNode o1, PageNode o2) {
+
+                if (distinctNeighbors.get(o1) < distinctNeighbors.get(o2)) {
+                    return -1;
+                }
+
+                if (distinctNeighbors.get(o1) > distinctNeighbors.get(o2)) {
+                    return 1;
+                }
+
+                return 0;
+            }
+        });
+        return closest.subList(0, n);
     }
 
     private Double sumOfSquaresDistance(double[] vector, double[] vector1) throws Exception {
         if (vector.length != vector1.length) {
-            throw new Exception();
+            throw new Exception("the vector lengths dont match");
         }
         double sum = 0;
         for (int i = 0; i < vector.length; i++) {
@@ -115,7 +133,30 @@ public class Annoy {
 
     }
 
-    public static void main(String[] args) {
-        //todo test this class
+    public static void main(String[] args) throws Exception {
+        PageNode p0 = new PageNode("p0");
+        PageNode p1 = new PageNode("p1");
+        PageNode p2 = new PageNode("p2");
+        PageNode p3 = new PageNode("p3");
+        PageNode p4 = new PageNode("p4");
+
+
+        p0.vector = new double[]{0, 0};
+        p1.vector = new double[]{1, 1};
+        p2.vector = new double[]{2, 2};
+        p3.vector = new double[]{3, 3};
+        p4.vector = new double[]{.5, .5};
+
+        ArrayList<PageNode> data = new ArrayList<>();
+        data.add(p0);
+        data.add(p1);
+        data.add(p2);
+        data.add(p3);
+        data.add(p4);
+
+        Annoy annoy = new Annoy(data, 1);
+        System.out.println(annoy.closestN(p0, 5, 5));
+
+
     }
 }

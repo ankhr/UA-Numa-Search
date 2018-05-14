@@ -17,5 +17,9 @@ public class PageNode {
 	public double[] getVecLoc(){
 		return this.vector;
 	}
-	
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }

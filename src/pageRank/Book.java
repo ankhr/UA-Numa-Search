@@ -1,7 +1,7 @@
 package pageRank;
-
-import org.jsoup.*;
-import org.jsoup.safety.*;
+//
+//import org.jsoup.*;
+//import org.jsoup.safety.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -59,9 +59,9 @@ public class Book {
                         pageName = br.readLine();
                         pageNameTracker = true;
                     }
-            
-                    // Strip everything but words
-                    line = Jsoup.clean(line, Whitelist.simpleText());
+//
+//                    // Strip everything but words
+//                    line = Jsoup.clean(line, Whitelist.simpleText());
                     if (!line.equalsIgnoreCase("")) {
                         String[] wordLine = line.split("[ =+!@#$%^&*()~`0123456789.,:;?—/\"]+");
                         words.add(wordLine);
@@ -110,21 +110,21 @@ public class Book {
         System.out.println(b);
     }
     
-    
-    
-    public static class Driver {
-    
-        public static void main(String[] args) {
-            
-            Book book = new Book();
-            
-            PageNode page1 = new PageNode("Anarchism");
-            PageNode page2 = new PageNode("Aardvark");
-            
-            book.doSomething(page1, page2);
-            book.euclideanDistance(page1, page2);
-        }
-    }
+//
+//
+//    public static class Driver {
+//
+//        public static void main(String[] args) {
+//
+//            Book book = new Book();
+//
+//            PageNode page1 = new PageNode("Anarchism");
+//            PageNode page2 = new PageNode("Aardvark");
+//
+//            book.doSomething(page1, page2);
+//            book.euclideanDistance(page1, page2);
+//        }
+//    }
 }
 
 
